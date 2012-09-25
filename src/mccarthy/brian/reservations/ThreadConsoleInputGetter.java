@@ -3,6 +3,13 @@ package mccarthy.brian.reservations;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+/**
+ * A test class that accepts input from the command line, an early replacement for the GUI
+ * Unused in current code.
+ * @author Brian McCarthy
+ *
+ */
+@Deprecated
 public class ThreadConsoleInputGetter extends Thread implements Shutdown {
 
 	boolean running;

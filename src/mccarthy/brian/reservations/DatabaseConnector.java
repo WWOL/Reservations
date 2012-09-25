@@ -3,11 +3,13 @@ package mccarthy.brian.reservations;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * 
+ * A connection to the database (MySQL)
+ * Contains references to the reader and writer
+ * @see DatabaseReader
+ * @see DatabaseWriter
  * @author Brian McCarthy
  *
  */
@@ -20,6 +22,12 @@ public class DatabaseConnector {
 	private DatabaseReader reader;
 	private DatabaseWriter writer;
 
+	/**
+	 * Constructor, also sets up reader and writer
+	 * @param url the JDBC url to the database
+	 * @param user the user name of the database
+	 * @param pass the password for the database
+	 */
 	public DatabaseConnector(String url, String user, String pass) {
 		this.url = url;
 		this.user = user;
@@ -28,36 +36,21 @@ public class DatabaseConnector {
 		writer = new DatabaseWriter();
 	}
 	
+	/**
+	 * Creates a connection, sets default tables (if needed) and loads all reservations from the database reader.
+	 * @see DatabaseReader
+	 */
 	public void connect() {
 		try {
-			connection = DriverManager.getConnection(url, user, pass);
+			connection = getConnection();
 		} catch (Exception e) {
 			System.err.println("Error creating connection! Cannot continue!");
 			e.printStackTrace();
 			Reservations.getInstance().shutdown();
 		}
 		createTables(connection);
-		System.err.println("Reader: " + reader);
 		reader.loadAll();
-		//test();
-	}
-	
-	private void test() {
-		PreparedStatement preStatement;
-		ResultSet resultSet;
-		try {
-			preStatement = connection.prepareStatement("SELECT * FROM data");
-			resultSet = preStatement.executeQuery();
-			
-			while (resultSet.next()) {
-				System.out.println("ID: " + resultSet.getInt(1));
-				System.out.println("Name: " + resultSet.getString(2));
-			}
-		} catch (SQLException e) {
-			System.err.println("Error creating prepared statment!");
-			e.printStackTrace();
-			return;
-		}
+		closeConnection(connection);
 	}
 	
 	/**
@@ -74,22 +67,43 @@ public class DatabaseConnector {
 		return null;
 	}
 	
+	/**
+	 * Get the database reader to read reservations directly from the database
+	 * @return {@link DatabaseReader} for this connection
+	 */
 	public DatabaseReader getReader() {
 		return reader;
 	}
 
+	/**
+	 * Sets the instance of database reader
+	 * @param reader the {@link DatabaseReader} to set
+	 */
 	public void setReader(DatabaseReader reader) {
 		this.reader = reader;
 	}
 
+	/**
+	 * Get the database writer to write new reservations or update old ones
+	 * @return the {@link DatabaseWriter} for this connection
+	 */
 	public DatabaseWriter getWriter() {
 		return writer;
 	}
 
+	/**
+	 * Set the database writer
+	 * @param writer the {@link DatabaseWriter} to set
+	 */
 	public void setWriter(DatabaseWriter writer) {
 		this.writer = writer;
 	}
 
+	/**
+	 * Create the tables needed for Reservations to work
+	 * Only creates tables if they don't exist
+	 * @param connection the connection to the database to use
+	 */
 	public void createTables(Connection connection) {
 		PreparedStatement preStatement;
 		try {
@@ -103,6 +117,11 @@ public class DatabaseConnector {
 		}
 	}
 	
+	/**
+	 * Closes the given connection
+	 * This is important as unclosed connections are a security risk and each database has a limited number of concurrent connections allowed
+	 * @param connection
+	 */
 	public void closeConnection(Connection connection) {
 		try {
 			connection.close();

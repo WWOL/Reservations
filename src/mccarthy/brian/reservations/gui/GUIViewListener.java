@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package mccarthy.brian.reservations.gui;
 
 import java.awt.event.ActionEvent;
@@ -17,7 +13,7 @@ public class GUIViewListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if (event.getSource().equals(GUIView.btn_info)) {
+        if (event.getSource().equals(GUIView.btn_seatID)) {
             String seatID = GUIView.txt_seatID.getText();
             if (seatID.trim().equals("") || seatID.contains(" ")) {
                 GUIView.txt_info.append("The seat " + seatID + " is invalid! \nPlease try again.\n");
@@ -41,11 +37,45 @@ public class GUIViewListener implements ActionListener {
             for (Reservation reservation : Reservations.getInstance().getReservations()) {
                 appendInfo(reservation);
             }
+        } else if (event.getSource().equals(GUIView.btn_name)) {
+        	String name = GUIView.txt_seatID.getText();
+            if (name.trim().equals("")) {
+                GUIView.txt_info.append("The name " + name + " is invalid! \nPlease try again.\n");
+                return;
+            }
+            Reservation reservation = null;
+            for (Reservation r : Reservations.getInstance().getReservations()) {
+                if (r.getName().equals(name)) {
+                    reservation = r;
+                }
+            }
+            if (reservation == null) {
+                GUIView.txt_info.append("The name " + name + " could not be found! \nPlease try again.\n");
+                return;
+            }
+            appendInfo(reservation);
+        } else if (event.getSource().equals(GUIView.btn_notes)) {
+        	String notes = GUIView.txt_seatID.getText();
+            if (notes.trim().equals("")) {
+                GUIView.txt_info.append("The note " + notes + " is invalid! \nPlease try again.\n");
+                return;
+            }
+            Reservation reservation = null;
+            for (Reservation r : Reservations.getInstance().getReservations()) {
+                if (r.getNotes().equals(notes)) {
+                    reservation = r;
+                }
+            }
+            if (reservation == null) {
+                GUIView.txt_info.append("The note " + notes + " could not be found! \nPlease try again.\n");
+                return;
+            }
+            appendInfo(reservation);
         }
     }
     
     private void appendInfo(Reservation reservation) {
-        GUIView.txt_info.append("Seat ID: " + reservation.getSeatID() + "\nName: " + reservation.getName() + "\nNotes: " + reservation.getNotes() + "\n");
+        GUIView.txt_info.append("Seat ID: " + reservation.getSeatID() + "\nName: " + reservation.getName() + "\nNotes: " + reservation.getNotes() + "\n\n\n");
     }
     
 }

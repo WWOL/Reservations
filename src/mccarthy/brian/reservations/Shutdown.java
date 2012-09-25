@@ -8,4 +8,5 @@ package mccarthy.brian.reservations;
 public interface Shutdown {
 
 	public void shutdown();
+	
 }

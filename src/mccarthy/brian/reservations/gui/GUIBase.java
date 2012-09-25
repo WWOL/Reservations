@@ -3,7 +3,8 @@ package mccarthy.brian.reservations.gui;
 import javax.swing.UIManager;
 
 /**
- *
+ * Base of GUI that holds singletons of the different forms
+ * This means that there can only be one of each form at a time  
  * @author Brian McCarthy
  */
 public class GUIBase {
@@ -38,8 +39,11 @@ public class GUIBase {
         GUINew.btn_check.addActionListener(newListener);
         
         GUIViewListener viewListener = new GUIViewListener();
-        GUIView.btn_info.addActionListener(viewListener);
+        GUIView.btn_seatID.addActionListener(viewListener);
         GUIView.btn_all.addActionListener(viewListener);
+        GUIView.btn_seatID.addActionListener(viewListener);
+        GUIView.btn_name.addActionListener(viewListener);
+        GUIView.btn_notes.addActionListener(viewListener);
         
     }
     

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package mccarthy.brian.reservations.gui;
 
 /**
@@ -30,18 +26,24 @@ public class GUIView extends javax.swing.JFrame {
         txt_info = new javax.swing.JTextArea();
         txt_seatID = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        btn_info = new javax.swing.JButton();
+        btn_seatID = new javax.swing.JButton();
         btn_all = new javax.swing.JButton();
+        btn_name = new javax.swing.JButton();
+        btn_notes = new javax.swing.JButton();
 
         txt_info.setColumns(20);
         txt_info.setRows(5);
         jScrollPane1.setViewportView(txt_info);
 
-        jLabel1.setText("Seat ID:");
+        jLabel1.setText("Input:");
 
-        btn_info.setText("View Info");
+        btn_seatID.setText("Search Seat ID");
 
         btn_all.setText("View All");
+
+        btn_name.setText("Search Name");
+
+        btn_notes.setText("Search Notes");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -50,15 +52,20 @@ public class GUIView extends javax.swing.JFrame {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jScrollPane1)
+                    .add(layout.createSequentialGroup()
+                        .add(btn_seatID)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(btn_name)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(btn_notes)
+                        .add(0, 63, Short.MAX_VALUE))
                     .add(layout.createSequentialGroup()
                         .add(jLabel1)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(txt_seatID, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                        .add(txt_seatID)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(btn_info)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(btn_all))
-                    .add(jScrollPane1))
+                        .add(btn_all)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -67,11 +74,15 @@ public class GUIView extends javax.swing.JFrame {
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel1)
-                    .add(btn_info)
                     .add(txt_seatID, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(btn_all))
-                .add(22, 22, 22)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(btn_seatID)
+                    .add(btn_name)
+                    .add(btn_notes))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -114,7 +125,9 @@ public class GUIView extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton btn_all;
-    public static javax.swing.JButton btn_info;
+    public static javax.swing.JButton btn_name;
+    public static javax.swing.JButton btn_notes;
+    public static javax.swing.JButton btn_seatID;
     public static javax.swing.JLabel jLabel1;
     public static javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTextArea txt_info;

@@ -3,8 +3,18 @@ package mccarthy.brian.reservations;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+/**
+ * Wrapper around simple writing statements for MySQL
+ * @author Brian McCarthy
+ *
+ */
 public class DatabaseWriter {
 	
+	/**
+	 * Adds the reservation to the database
+	 * @param reservation reservation to add, must not have default seatID of "UNKNOWN"
+	 * @throws IllegalArgumentException if seatID equals "UNKNOWN"
+	 */
 	public void writeReservation(Reservation reservation) {
 		if (reservation.getSeatID().equals("UNKNOWN")) {
 			throw new IllegalArgumentException("Please properly initialize Reservation with correct seatID!");
@@ -30,6 +40,10 @@ public class DatabaseWriter {
 		Reservations.getDB().closeConnection(connection);
 	}
 	
+	/**
+	 * Remove the reservation from the database
+	 * @param seatID seatID of the {@link Reservation} to remove
+	 */
 	public void removeReservation(String seatID) {
 		PreparedStatement preStatement;
 		Connection connection = Reservations.getDB().getConnection();

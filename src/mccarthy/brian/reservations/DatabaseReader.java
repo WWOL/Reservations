@@ -4,12 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+/**
+ * Wrapper around simple reading statements for MySQL
+ * @author Brian McCarthy
+ *
+ */
 public class DatabaseReader {
 
 	/**
-	 * 
+	 * Get the {@link Reservation} with the givin seat ID
 	 * @param seatID
-	 * @return null if error occurs
+	 * @return null if error occurs or no reservation by that ID exists
 	 */
 	public Reservation readReservation(String seatID) {
 		Reservation reservation = new Reservation();
@@ -42,6 +47,9 @@ public class DatabaseReader {
 		return reservation;
 	}
 
+	/**
+	 * Loads all reservations from the database into memory
+	 */
 	public void loadAll() {
 		PreparedStatement preStatement;
 		ResultSet rs;
